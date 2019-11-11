@@ -67,9 +67,10 @@ def test_textchange(qtbot, windows):
     qtbot.keyPress(win.editor, Qt.Key_Up)
     assert "*" not in win.windowTitle()
 
-# def test_mainwin(qtbot, windows):
-#     windows["main"].show()
-#     # qtbot.waitForWindowShown(windows["main"])
-#     with mock.patch.object(QApplication, "exit"):
-#         windows["main"].newWithTemplate()
-#         assert QApplication.exit.call_count == 0
+def test_win(qtbot, windows):
+    windows["main"].show()
+    windows["main"].docks["preview"].widget().setCurrentIndex(2)
+    qtbot.wait(1000)
+    # qtbot.waitForWindowShown(windows["main"])
+    with mock.patch.object(QApplication, "exit"):
+        assert QApplication.exit.call_count == 0
