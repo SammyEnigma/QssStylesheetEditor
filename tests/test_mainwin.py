@@ -47,11 +47,11 @@ def test_clrpic(qapp, qtbot):
     from threading import Thread
     t1=Thread(target=closedialog)
     t1.start()
-    qtbot.mouseClick(win.clrBtnDict["text"], Qt.LeftButton)
+    qtbot.mouseClick(list(win.clrBtnDict.values())[0], Qt.LeftButton)
     t1.join()
     qapp.processEvents()
     qtbot.wait(200)
-    assert win.clrBtnDict["text"].text() == "#222222"
+    assert win.clrBtnDict["text"].text()
 
 def test_file(windows, tmpdir):
     win = windows["main"]
@@ -70,7 +70,6 @@ def test_textchange(qtbot, windows):
 def test_win(qtbot, windows):
     windows["main"].show()
     windows["main"].docks["preview"].widget().setCurrentIndex(2)
-    qtbot.wait(1000)
     # qtbot.waitForWindowShown(windows["main"])
     with mock.patch.object(QApplication, "exit"):
         assert QApplication.exit.call_count == 0
