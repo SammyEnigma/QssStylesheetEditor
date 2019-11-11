@@ -33,6 +33,7 @@ def test_theme(windows):
 def test_clrpic(qapp, qtbot):
     from ui.mainwin import MainWin
     win=MainWin()
+    win.editor.setText("$text=#222222;")
     def closedialog():
         while not qapp.activeModalWidget():
             qtbot.wait(100)
@@ -47,11 +48,11 @@ def test_clrpic(qapp, qtbot):
     from threading import Thread
     t1=Thread(target=closedialog)
     t1.start()
-    qtbot.mouseClick(list(win.clrBtnDict.values())[0], Qt.LeftButton)
+    qtbot.mouseClick(win.clrBtnDict["text"], Qt.LeftButton)
     t1.join()
     qapp.processEvents()
     qtbot.wait(200)
-    assert win.clrBtnDict["text"].text()
+    assert win.clrBtnDict["text"].text() == "#222222"
 
 def test_file(windows, tmpdir):
     win = windows["main"]
